@@ -1,11 +1,21 @@
 from fastapi import FastAPI, Form
 import numpy as np
 import pandas as pd
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
 # Load the model
 model = pd.read_pickle("heart.pkl")
+app.add_middleware(
+    CORSMiddleware,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+    allow_origins=['*']
+)
+
+
 
 @app.get('/')
 async def index():
